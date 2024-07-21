@@ -1,46 +1,57 @@
 plugins {
-    kotlin("multiplatform") version "1.9.24" //Check this
+    id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
-    id("org.jetbrains.compose") version "1.7.0"
+    id("org.jetbrains.compose") version "1.6.11"
+}
+
+android {
+    namespace = "com.example.kotlinmultiplatformcomposeapp"
+    compileSdk = 34
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 34
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 kotlin {
     android()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                implementation("org.jetbrains.compose.runtime:runtime:1.5.1")
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.13.1")
-                implementation("androidx.appcompat:appcompat:1.3.1")
+                implementation("androidx.appcompat:appcompat:1.6.1")
+                implementation("androidx.core:core-ktx:1.9.0")
             }
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
         }
     }
 }
 
-android {
-    compileSdk = 34
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 34
+compose.desktop {
+    application {
+        mainClass = "MainKt"
     }
 }

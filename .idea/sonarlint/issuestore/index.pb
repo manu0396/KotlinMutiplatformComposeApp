@@ -15,3 +15,5 @@ G
 shared/build.gradle.kts,c\7\c75a46202110405791c74357375762fb05087d5b
 S
 #shared/src/main/AndroidManifest.xml,3\d\3da485ad75d61f696c153a1f7646f5d8ad9cef60
+@
+local.properties,0\7\0712df971a99ac4d2fccb8e0fb19f377f3374cca
