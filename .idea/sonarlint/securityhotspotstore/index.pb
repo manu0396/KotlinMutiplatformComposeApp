@@ -3,3 +3,15 @@
 build.gradle.kts,d\b\dbcff70658daf80b53ce624f6adcaa529df5ed8d
 C
 settings.gradle.kts,7\4\749edfcc96398253e5b3416184e95c46621da850
+n
+>app/src/main/java/com/example/app/ui/screen/DashboardScreen.kt,e\c\ec70699f1e012d9243445af775d192d41918e00c
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
+g
+7shared/src/main/java/com/example/shared/MainActivity.kt,3\c\3cf16a60220bd66b284039a6008c6661efb5a5bc
+G
+shared/build.gradle.kts,c\7\c75a46202110405791c74357375762fb05087d5b
+S
+#shared/src/main/AndroidManifest.xml,3\d\3da485ad75d61f696c153a1f7646f5d8ad9cef60
