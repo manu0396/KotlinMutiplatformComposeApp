@@ -17,3 +17,11 @@ S
 #shared/src/main/AndroidManifest.xml,3\d\3da485ad75d61f696c153a1f7646f5d8ad9cef60
 @
 local.properties,0\7\0712df971a99ac4d2fccb8e0fb19f377f3374cca
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+c
+3app/src/main/java/com/example/app/ui/nav/Screens.kt,e\f\ef4b881c470f80b4c52d390837ff178da0b55ceb
+d
+4app/src/main/java/com/example/app/MainApplication.kt,3\7\37f7a070a704c0289fcd38ef6cc08cb47b216c58
+a
+1app/src/main/java/com/example/app/MainActivity.kt,1\d\1deca740e5395c71cfe8f2645da260c8d390e22c

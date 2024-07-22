@@ -11,4 +11,5 @@ pluginManagement {
 }
 
 rootProject.name = "KotlinMultiplatformComposeApp"
+include(":app")
 include(":shared")
