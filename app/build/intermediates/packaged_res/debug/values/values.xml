@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kotlin Multiplatform Compose App</string>
+    <string name="errGeneric">Se ha producido un error</string>
+    <string name="errGenericDB">Se ha producido un error en la base de datos</string>
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

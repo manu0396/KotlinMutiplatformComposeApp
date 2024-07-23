@@ -2,4 +2,6 @@ R_DEF: Internal format may change without notice
 local
 drawable baseline_android_24
 string app_name
+string errGeneric
+string errGenericDB
 style AppTheme

@@ -5,7 +5,7 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id("org.jetbrains.kotlin.multiplatform") version "1.9.24"
+        id("org.jetbrains.kotlin.multiplatform") version "1.9.20"
         id("org.jetbrains.compose") version "1.4.0"
     }
 }
