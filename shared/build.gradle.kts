@@ -9,7 +9,9 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        publishAllLibraryVariants()
+    }
 
     jvm()
 
@@ -34,6 +36,7 @@ kotlin {
                 implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
                 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
                 implementation("androidx.activity:activity-compose:1.3.1")
+                kapt("com.google.dagger:hilt-android-compiler:2.38.1")
             }
         }
         val iosMain by getting {
@@ -48,12 +51,15 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 21
-        targetSdkVersion = 34
+        targetSdk = 34
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -62,4 +68,11 @@ android {
 dependencies {
     implementation("com.google.dagger:hilt-android:2.38.1")
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+}
+
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
+    }
 }
