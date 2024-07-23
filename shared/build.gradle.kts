@@ -1,47 +1,52 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("org.jetbrains.kotlin.plugin.serialization") version project.findProperty("kotlinVersion") as String
+    id("org.jetbrains.compose") version project.findProperty("jetbrainsComposeVersion") as String
     id("kotlin-parcelize")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
-    id("org.jetbrains.compose")
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
 
 kotlin {
-    androidTarget {
-        publishAllLibraryVariants()
-    }
+    androidTarget()
 
     jvm()
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    ios {
+        binaries {
+            framework {
+                baseName = "Shared"
+            }
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
-                implementation("io.ktor:ktor-client-core:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.findProperty("coroutinesVersion") as String}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${project.findProperty("serializationVersion") as String}")
+                implementation("io.ktor:ktor-client-core:${project.findProperty("ktorVersion") as String}")
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                implementation("androidx.compose.ui:ui:1.4.0")
-                implementation("androidx.compose.material:material:1.4.0")
-                implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
-                implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-                implementation("androidx.activity:activity-compose:1.3.1")
-                kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${project.findProperty("coroutinesVersion") as String}")
+                implementation("com.google.dagger:hilt-android:${project.findProperty("hiltVersion") as String}")
+                implementation("androidx.compose.ui:ui:${project.findProperty("composeVersion") as String}")
+                implementation("androidx.compose.material:material:${project.findProperty("composeVersion") as String}")
+                implementation("androidx.compose.ui:ui-tooling-preview:${project.findProperty("composeVersion") as String}")
+                implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.findProperty("lifecycleVersion") as String}")
+                implementation("androidx.activity:activity-compose:${project.findProperty("activityComposeVersion") as String}")
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:1.6.2")
+                implementation("io.ktor:ktor-client-ios:${project.findProperty("ktorVersion") as String}")
             }
         }
     }
@@ -49,6 +54,7 @@ kotlin {
 
 android {
     compileSdk = 34
+    namespace = "com.example.shared"
     defaultConfig {
         minSdk = 21
         targetSdk = 34
@@ -63,11 +69,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     kotlinOptions {
         jvmTarget = "17"
     }
-}
-
-dependencies {
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 }
 
 kapt {

@@ -1,3 +1,6 @@
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -32,15 +35,15 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:${property("coreKtxVersion")}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${property("lifecycleRuntimeKtxVersion")}")
-    implementation("androidx.activity:activity-compose:${property("activityComposeVersion")}")
-    implementation(platform("androidx.compose:compose-bom:${property("composeBomVersion")}"))
-    implementation("androidx.compose.material3:material3:${property("material3Version")}")
-    implementation("com.google.dagger:hilt-android:${property("daggerHiltVersion")}")
-    kapt("com.google.dagger:hilt-android-compiler:${property("hiltCompilerVersion")}")
-    implementation("javax.inject:javax.inject:${property("javaxInjectVersion")}")
-    testImplementation("junit:junit:${property("junitVersion")}")
-    androidTestImplementation("androidx.test.ext:junit:${property("junitKtxVersion")}")
-    androidTestImplementation("androidx.test.espresso:espresso-core:${property("espressoCoreVersion")}")
+    implementation("androidx.core:core-ktx:${project.findProperty("coreKtxVersion") as String}")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.findProperty("lifecycleRuntimeKtxVersion") as String}")
+    implementation("androidx.activity:activity-compose:${project.findProperty("activityComposeVersion") as String}")
+    implementation(platform("androidx.compose:compose-bom:${project.findProperty("composeBomVersion") as String}"))
+    implementation("androidx.compose.material3:material3:${project.findProperty("material3Version") as String}")
+    implementation("com.google.dagger:hilt-android:${project.findProperty("daggerHiltVersion") as String}")
+    kapt("com.google.dagger:hilt-android-compiler:${project.findProperty("hiltCompilerVersion") as String}")
+    implementation("javax.inject:javax.inject:${project.findProperty("javaxInjectVersion") as String}")
+    testImplementation("junit:junit:${project.findProperty("junitVersion") as String}")
+    androidTestImplementation("androidx.test.ext:junit:${project.findProperty("junitKtxVersion") as String}")
+    androidTestImplementation("androidx.test.espresso:espresso-core:${project.findProperty("espressoCoreVersion") as String}")
 }
