@@ -1,50 +1,49 @@
 plugins {
-    kotlin("multiplatform") version extra["kotlinVersion"] as String
-    id("org.jetbrains.kotlin.plugin.serialization") version extra["kotlinVersion"] as String
-    id("org.jetbrains.compose") version extra["jetbrainsComposeVersion"] as String
-}
-
-repositories {
-    google()
-    mavenCentral()
+    kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.5.0"
+    id("org.jetbrains.compose")
 }
 
 kotlin {
+    jvm()
     android()
-    jvm("desktop")
+    ios()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${extra["kotlinxSerializationVersion"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0")
                 implementation(compose.runtime)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.0")
+                implementation(compose.runtime)
+                implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.material)
             }
         }
-        val androidMain by getting {
+
+        val androidTest by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
-                implementation("androidx.appcompat:appcompat:${extra["androidAppcompatVersion"]}")
-                implementation("androidx.core:core-ktx:${extra["androidCoreKtxVersion"]}")
-                implementation(compose.ui)
-                implementation(compose.uiTooling)
-            }
-        }
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.2")
             }
         }
     }
 }
 
 android {
-    compileSdkVersion((extra["androidCompileSdkVersion"] as String).toInt())
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion((extra["androidMinSdkVersion"] as String).toInt())
-        targetSdkVersion((extra["androidTargetSdkVersion"] as String).toInt())
-    }
+    compileSdkVersion(34)
+    namespace = "com.example.shared"
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
