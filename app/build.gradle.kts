@@ -1,6 +1,8 @@
+import org.gradle.kotlin.dsl.*
+
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
     id("kotlin-kapt")
     id("org.jetbrains.compose")
 }
@@ -10,21 +12,33 @@ android {
 
     defaultConfig {
         applicationId = "com.example.app"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    signingConfigs {
+        create("release") {
+            keyAlias = project.findProperty("MYAPP_KEY_ALIAS") as String? ?: ""
+            keyPassword = project.findProperty("MYAPP_KEY_PASSWORD") as String? ?: ""
+            storeFile = file(project.findProperty("MYAPP_STORE_FILE") as String? ?: "")
+            storePassword = project.findProperty("MYAPP_STORE_PASSWORD") as String? ?: ""
         }
     }
 
-    namespace = "com.example.app"
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+    }
 }
 
 dependencies {
