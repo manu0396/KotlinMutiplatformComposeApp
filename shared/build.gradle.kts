@@ -22,7 +22,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                // Android-specific dependencies
+                implementation("androidx.core:core-ktx:${project.extra["coreKtxVersion"]}")
+                implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.extra["lifecycleRuntimeKtxVersion"]}")
+                implementation("androidx.activity:activity-compose:${project.extra["activityComposeVersion"]}")
             }
         }
         val androidUnitTest by getting {
@@ -57,11 +59,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = project.extra["androidCompileSdkVersion"] as Int
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 24
-        targetSdk = 34
+        minSdk = project.extra["androidMinSdkVersion"] as Int
+        targetSdk = project.extra["androidTargetSdkVersion"] as Int
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true

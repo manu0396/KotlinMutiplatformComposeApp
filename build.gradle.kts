@@ -1,9 +1,9 @@
 import org.gradle.kotlin.dsl.*
 
 plugins {
-    kotlin("multiplatform") version "1.8.20"
-    id("com.android.application") version "8.5.1"
-    id("org.jetbrains.compose") version "1.0.0"
+    kotlin("multiplatform") version project.extra["kotlinVersion"] as String
+    id("com.android.application") version project.extra["androidGradlePluginVersion"] as String
+    id("org.jetbrains.compose") version project.extra["composeVersion"] as String
 }
 
 buildscript {
@@ -12,8 +12,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.5.1")
-        classpath(kotlin("gradle-plugin", "1.8.20"))
+        classpath("com.android.tools.build:gradle:${project.extra["androidGradlePluginVersion"]}")
+        classpath(kotlin("gradle-plugin", project.extra["kotlinVersion"] as String))
     }
 }
 
@@ -43,7 +43,10 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                // Android-specific dependencies
+                implementation("androidx.core:core-ktx:${project.extra["coreKtxVersion"]}")
+                implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.extra["lifecycleRuntimeKtxVersion"]}")
+                implementation("androidx.activity:activity-compose:${project.extra["activityComposeVersion"]}")
+                implementation("com.google.accompanist:accompanist-navigation-animation:0.25.0")
             }
         }
         val androidUnitTest by getting {

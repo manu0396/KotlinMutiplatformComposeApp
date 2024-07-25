@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = project.extra["androidCompileSdkVersion"] as Int
 
     defaultConfig {
         applicationId = "com.example.app"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = project.extra["androidMinSdkVersion"] as Int
+        targetSdk = project.extra["androidTargetSdkVersion"] as Int
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -42,12 +42,12 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${project.extra["kotlinVersion"]}")
+    implementation("androidx.core:core-ktx:${project.extra["coreKtxVersion"]}")
+    implementation("androidx.appcompat:appcompat:${project.extra["androidAppcompatVersion"]}")
+    implementation("com.google.android.material:material:${project.extra["androidMaterialVersion"]}")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:${project.extra["espressoCoreVersion"]}")
 }
