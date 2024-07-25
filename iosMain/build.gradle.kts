@@ -1,52 +1,26 @@
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
 kotlin {
-    android()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                // Common dependencies
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation("androidx.core:core-ktx:${project.extra["coreKtxVersion"]}")
-                implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.extra["lifecycleRuntimeKtxVersion"]}")
-                implementation("androidx.activity:activity-compose:${project.extra["activityComposeVersion"]}")
-            }
-        }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
         val iosMain by creating {
             dependencies {
-                // Add iOS-specific dependencies here
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${extra["coroutinesVersion"]}")
+                implementation("com.squareup.retrofit2:retrofit:${extra["retrofitVersion"]}")
+                implementation("com.squareup.retrofit2:converter-gson:${extra["retrofitVersion"]}")
+                implementation("com.squareup.okhttp3:okhttp:${extra["okhttpVersion"]}")
+                implementation("com.squareup.okhttp3:logging-interceptor:${extra["okhttpVersion"]}")
+                implementation("com.google.zxing:core:${project.extra["zxingVersion"]}") // QR code reading
             }
         }
         val iosTest by creating {
             dependencies {
-                // Add iOS-specific test dependencies here
+                implementation(kotlin("test"))
             }
         }
         getByName("iosX64Main").dependsOn(iosMain)
@@ -55,17 +29,5 @@ kotlin {
         getByName("iosX64Test").dependsOn(iosTest)
         getByName("iosArm64Test").dependsOn(iosTest)
         getByName("iosSimulatorArm64Test").dependsOn(iosTest)
-    }
-}
-
-android {
-    compileSdk = project.extra["androidCompileSdkVersion"] as Int
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = project.extra["androidMinSdkVersion"] as Int
-        targetSdk = project.extra["androidTargetSdkVersion"] as Int
-    }
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
     }
 }
