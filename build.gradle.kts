@@ -1,11 +1,10 @@
 import org.gradle.kotlin.dsl.*
 
 plugins {
-    kotlin("multiplatform") version project.extra["kotlinVersion"] as String
-    id("com.android.application") version project.extra["androidGradlePluginVersion"] as String
-    id("org.jetbrains.compose") version project.extra["jetbrainsComposeVersion"] as String
-    id("dagger.hilt.android.plugin") version project.extra["daggerHiltVersion"] as String
-    kotlin("kapt") version project.extra["kotlinVersion"] as String
+    kotlin("multiplatform") version project.extra["kotlinVersion"] as String apply false
+    id("com.android.application") version project.extra["androidGradlePluginVersion"] as String apply false
+    id("com.google.devtools.ksp") version project.extra["kspVersion"] as String apply false
+    id("dagger.hilt.android.plugin") version project.extra["daggerHiltVersion"] as String apply false
 }
 
 buildscript {
@@ -58,8 +57,8 @@ kotlin {
                 implementation("androidx.room:room-ktx:${project.extra["roomVersion"]}")
                 implementation("com.github.bumptech.glide:glide:${project.extra["glideVersion"]}")
                 implementation("com.google.dagger:hilt-android:${project.extra["daggerHiltVersion"]}")
-                kapt("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
-                kapt("androidx.room:room-compiler:${project.extra["roomVersion"]}")
+                ksp("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
+                ksp("androidx.room:room-compiler:${project.extra["roomVersion"]}")
                 implementation("com.google.zxing:core:${project.extra["zxingVersion"]}") // QR code reading
             }
         }

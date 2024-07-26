@@ -1,9 +1,9 @@
 import org.gradle.kotlin.dsl.*
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("multiplatform")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
 }
 
@@ -11,33 +11,11 @@ android {
     compileSdkVersion(project.extra["androidCompileSdkVersion"] as Int)
 
     defaultConfig {
-        applicationId = "com.example.app"
         minSdkVersion(project.extra["androidMinSdkVersion"] as Int)
         targetSdkVersion(project.extra["androidTargetSdkVersion"] as Int)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    signingConfigs {
-        create("release") {
-            keyAlias = project.findProperty("MYAPP_KEY_ALIAS") as String? ?: ""
-            keyPassword = project.findProperty("MYAPP_KEY_PASSWORD") as String? ?: ""
-            storeFile = file(project.findProperty("MYAPP_STORE_FILE") as String? ?: "")
-            storePassword = project.findProperty("MYAPP_STORE_PASSWORD") as String? ?: ""
-        }
-    }
-
-    buildTypes {
-        getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-        getByName("debug") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
 }
 
@@ -74,8 +52,8 @@ kotlin {
                 implementation("androidx.room:room-ktx:${project.extra["roomVersion"]}")
                 implementation("com.github.bumptech.glide:glide:${project.extra["glideVersion"]}")
                 implementation("com.google.dagger:hilt-android:${project.extra["daggerHiltVersion"]}")
-                kapt("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
-                kapt("androidx.room:room-compiler:${project.extra["roomVersion"]}")
+                ksp("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
+                ksp("androidx.room:room-compiler:${project.extra["roomVersion"]}")
                 implementation("com.google.zxing:core:3.3.3") // QR code reading
             }
         }
@@ -130,8 +108,8 @@ dependencies {
     implementation("androidx.room:room-ktx:${project.extra["roomVersion"]}")
     implementation("com.github.bumptech.glide:glide:${project.extra["glideVersion"]}")
     implementation("com.google.dagger:hilt-android:${project.extra["daggerHiltVersion"]}")
-    kapt("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
-    kapt("androidx.room:room-compiler:${project.extra["roomVersion"]}")
+    ksp("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
+    ksp("androidx.room:room-compiler:${project.extra["roomVersion"]}")
     implementation("com.google.zxing:core:${project.extra["zxingVersion"]}") // QR code reading
 
     // Testing dependencies

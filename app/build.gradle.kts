@@ -3,9 +3,7 @@ import org.gradle.kotlin.dsl.*
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
-    id("org.jetbrains.compose")
-    id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -43,40 +41,30 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${project.extra["kotlinVersion"]}")
-    implementation("androidx.core:core-ktx:${project.extra["coreKtxVersion"]}")
-    implementation("androidx.appcompat:appcompat:${project.extra["androidAppcompatVersion"]}")
-    implementation("com.google.android.material:material:${project.extra["androidMaterialVersion"]}")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${project.extra["lifecycleRuntimeKtxVersion"]}")
-    implementation("androidx.activity:activity-compose:${project.extra["activityComposeVersion"]}")
-    implementation("androidx.compose.ui:ui:${project.extra["composeVersion"]}")
-    implementation("androidx.compose.material3:material3:${project.extra["material3Version"]}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${project.extra["composeVersion"]}")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.25.0")
-    implementation("com.squareup.retrofit2:retrofit:${project.extra["retrofitVersion"]}")
-    implementation("com.squareup.retrofit2:converter-gson:${project.extra["retrofitVersion"]}")
-    implementation("com.squareup.okhttp3:okhttp:${project.extra["okhttpVersion"]}")
-    implementation("com.squareup.okhttp3:logging-interceptor:${project.extra["okhttpVersion"]}")
-    implementation("androidx.room:room-runtime:${project.extra["roomVersion"]}")
-    implementation("androidx.room:room-ktx:${project.extra["roomVersion"]}")
-    implementation("com.github.bumptech.glide:glide:${project.extra["glideVersion"]}")
-    implementation("com.google.dagger:hilt-android:${project.extra["daggerHiltVersion"]}")
-    kapt("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
-    kapt("androidx.room:room-compiler:${project.extra["roomVersion"]}")
-    implementation("com.google.zxing:core:3.3.3") // QR code reading
-
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${extra["kotlinVersion"]}")
+    implementation("androidx.core:core-ktx:${extra["androidCoreKtxVersion"]}")
+    implementation("androidx.appcompat:appcompat:${extra["androidAppcompatVersion"]}")
+    implementation("com.google.android.material:material:${extra["androidMaterialVersion"]}")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${extra["lifecycleRuntimeKtxVersion"]}")
+    implementation("androidx.activity:activity-compose:${extra["activityComposeVersion"]}")
+    implementation("androidx.compose.ui:ui:${extra["composeVersion"]}")
+    implementation("androidx.compose.material3:material3:${extra["material3Version"]}")
+    implementation("androidx.compose.ui:ui-tooling-preview:${extra["composeVersion"]}")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.21.3-beta")
+    implementation("com.squareup.retrofit2:retrofit:${extra["retrofitVersion"]}")
+    implementation("com.squareup.retrofit2:converter-gson:${extra["retrofitVersion"]}")
+    implementation("com.squareup.okhttp3:okhttp:${extra["okhttpVersion"]}")
+    implementation("com.squareup.okhttp3:logging-interceptor:${extra["okhttpVersion"]}")
+    implementation("androidx.room:room-runtime:${extra["roomVersion"]}")
+    implementation("androidx.room:room-ktx:${extra["roomVersion"]}")
+    ksp("androidx.room:room-compiler:${extra["roomVersion"]}")
+    implementation("com.github.bumptech.glide:glide:${extra["glideVersion"]}")
+    implementation("com.google.dagger:hilt-android:${extra["daggerHiltVersion"]}")
+    ksp("com.google.dagger:hilt-compiler:${extra["hiltCompilerVersion"]}")
+    implementation("com.google.zxing:core:${extra["zxingVersion"]}")
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:${project.extra["espressoCoreVersion"]}")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${project.extra["composeVersion"]}")
-}
-
-// Apply the Kotlin Kapt plugin to enable annotation processing
-kapt {
-    correctErrorTypes = true
-    arguments {
-        arg("room.incremental", "true")
-    }
 }
