@@ -57,7 +57,7 @@ kotlin {
                 implementation("androidx.room:room-ktx:${project.extra["roomVersion"]}")
                 implementation("com.github.bumptech.glide:glide:${project.extra["glideVersion"]}")
                 implementation("com.google.dagger:hilt-android:${project.extra["daggerHiltVersion"]}")
-                ksp("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}")
+                ksp("com.google.dagger:hilt-compiler:${project.extra["hiltCompilerVersion"]}") //TODO: BUG IS HERE. tHE DECLARATION OF DAGGER/HILT IS BEING DEVELOPING IN KSP LIBRARIES. Fix when be updated
                 ksp("androidx.room:room-compiler:${project.extra["roomVersion"]}")
                 implementation("com.google.zxing:core:${project.extra["zxingVersion"]}") // QR code reading
             }
